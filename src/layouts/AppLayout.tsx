@@ -17,6 +17,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+      width: '100vw',
+      overflow: 'hidden',
     },
     appBar: {
       transition: theme.transitions.create(['margin', 'width'], {
@@ -62,8 +64,19 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: -drawerWidth,
     },
     contentWrapper: {
+      position: 'relative',
       width: '100vw',
+      minHeight: '100vh',
       padding: theme.spacing(3),
+    },
+    contentFade: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: '#343434',
+      opacity: .5,
     },
     contentShift: {
       transition: theme.transitions.create('margin', {
@@ -141,6 +154,7 @@ export default function AppLayout (props: AppLayoutProps): React.ReactElement {
         <div className={clsx(classes.contentWrapper)}>
           <div className={classes.drawerHeader} />
           {props.children}
+          {open && <div className={classes.contentFade} />}
         </div>
       </main>
     </div>
