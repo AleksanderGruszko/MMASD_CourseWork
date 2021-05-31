@@ -1,9 +1,11 @@
 import { Store, Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import {TestSliceState} from './test/test.types';
+import { TestSliceState } from './test/test.types';
+import { NotificationsSliceType } from './notifications/notifications.types';
 
 export type ApplicationState = {
   test: TestSliceState;
+  notifications: NotificationsSliceType;
 };
 
 export type AppStore = Store<ApplicationState>;

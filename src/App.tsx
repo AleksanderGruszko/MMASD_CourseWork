@@ -1,11 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import {ThemeProvider} from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
+import { ThemeProvider } from '@material-ui/core/styles';
 import AppLayout from './layouts/AppLayout';
-import {MainMenu} from './components/MainMenu';
+import { MainMenu } from './components/MainMenu';
 import {defaultTheme} from './themes/default.theme';
-import {DataTable} from './components/DataTable/index';
 import store from './store';
+import { ConnectedNotifications } from './components/ConnectedNotifications';
+import PageRoutes from './pages';
 
 function App() {
   return (
@@ -14,19 +16,12 @@ function App() {
         <AppLayout
           renderMenu={MainMenu}
         >
-          <DataTable
-            items={[
-              {id: '1', name: 'Vasya', age: 32},
-              {id: '2', name: 'Petya', age: 25},
-            ]}
-            uniqueFieldName="id"
-            structure={[
-              {title: 'user name', relatedFieldName: 'name'},
-              {title: 'user age', relatedFieldName: 'age'},
-            ]}
-          />
+          <PageRoutes />
         </AppLayout>
       </ThemeProvider>
+      <SnackbarProvider>
+        <ConnectedNotifications />
+      </SnackbarProvider>
     </Provider>
   );
 }
