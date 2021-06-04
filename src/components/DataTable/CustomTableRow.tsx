@@ -36,6 +36,8 @@ type CustomTableRowProps = {
   item: DataTableItem;
   uniqueFieldName: string;
   structure: DataTableStructureItem[];
+  isEditableItem?: (row: DataTableItem) => boolean;
+  isRemovableItem?: (row: DataTableItem) => boolean;
   onRemoveItemClick: (uniqueValue: any) => void;
   onEditItemClick: (uniqueValue: any) => void;
 };
@@ -44,11 +46,16 @@ export function CustomTableRow ({
   item,
   structure,
   uniqueFieldName,
+  isEditableItem,
+  isRemovableItem,
   onRemoveItemClick,
   onEditItemClick,
 }: CustomTableRowProps) {
   const classes = useStyles();
   const itemUniqueName = item[uniqueFieldName];
+
+  const isEditable = typeof isEditableItem !== 'undefined'
+    || typeof isRemovableItem !== 'undefined';
 
   const handleRemoveBtnClick = () => {
     onRemoveItemClick(itemUniqueName);
@@ -58,22 +65,36 @@ export function CustomTableRow ({
     onEditItemClick(itemUniqueName);
   };
 
-  return (
-    <StyledTableRow>
+  const ActionsCell = () => {
+    if (!isEditable) {
+      return null;
+    }
+
+    return (
       <TableCell padding={"checkbox"}>
         <div className={clsx(classes.actionButtonsRoot)}>
-          <IconButton
-            onClick={handleRemoveBtnClick}
-          >
-            <DeleteIcon fontSize={"small"}/>
-          </IconButton>
-          <IconButton
-            onClick={handleEditBtnClick}
-          >
-            <EditIcon fontSize={'small'}/>
-          </IconButton>
+          {isRemovableItem && isRemovableItem(item) && (
+            <IconButton
+              onClick={handleRemoveBtnClick}
+            >
+              <DeleteIcon fontSize={"small"}/>
+            </IconButton>
+          )}
+          {isEditableItem && isEditableItem(item) && (
+            <IconButton
+              onClick={handleEditBtnClick}
+            >
+              <EditIcon fontSize={'small'}/>
+            </IconButton>
+          )}
         </div>
       </TableCell>
+    )
+  };
+
+  return (
+    <StyledTableRow>
+      <ActionsCell />
       {structure.map(({relatedFieldName}, index) => {
         const cellContent = item[relatedFieldName];
         return (

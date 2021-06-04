@@ -18,6 +18,8 @@ type DataTableProps = {
   items: DataTableItem[];
   uniqueFieldName: string;
   structure: DataTableStructureItem[];
+  isEditableItem?: (row: DataTableItem) => boolean;
+  isRemovableItem?: (row: DataTableItem) => boolean;
   onAddItemClick?: () => void;
   onRemoveItemClick?: (uniqueValue: any) => void;
   onEditItemClick?: (uniqueValue: any) => void;
@@ -46,16 +48,19 @@ export function DataTable ({
   onEditItemClick = noop,
   onRemoveItemClick = noop,
   onAddItemClick = noop,
+  isEditableItem,
+  isRemovableItem,
 }: DataTableProps) {
   const classes = useStyles();
-
+  const isEditable = typeof isEditableItem !== 'undefined'
+    || typeof isRemovableItem !== 'undefined';
   return (
     <div className={cs(classes.root)}>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell />
+              {isEditable && <TableCell />}
               {structure.map(({title}, index) => (
                 <TableCell
                   key={title}
@@ -75,6 +80,8 @@ export function DataTable ({
                   structure={structure}
                   onRemoveItemClick={onRemoveItemClick}
                   onEditItemClick={onEditItemClick}
+                  isEditableItem={isEditableItem}
+                  isRemovableItem={isRemovableItem}
                 />
               );
             })}
