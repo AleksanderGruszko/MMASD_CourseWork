@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TestSliceState } from './test.types';
-import { ApplicationState, ThunkActionCreator } from '../store.types';
+import {asSliceActions, asSliceSelectors } from '../store.types';
 
 const initialState: TestSliceState = {
   counter: 0,
   isLoaded: false,
 };
 
+const SLICE_NAME = 'test';
+
 // example of typed-under-the-hood reducer and simple actions with tools
-const rawTestSlice = createSlice({
-  name: 'test',
+const rawSlice = createSlice({
+  name: SLICE_NAME,
   initialState,
   reducers: {
     setCounter(state, action: PayloadAction<number>): void {
@@ -21,25 +23,28 @@ const rawTestSlice = createSlice({
   },
 });
 
-const { actions } = rawTestSlice;
+const rawActions = rawSlice.actions;
 
 // example of selectors typings
-const getCounter = (state: ApplicationState): number => state.test.counter;
+const selectors = asSliceSelectors({
+  getCounter: (state): number => state[SLICE_NAME].counter,
+});
 
-const incrementCounter = (): ThunkActionCreator => (dispatch, getState) => {
-  const state = getState();
-  const counter = getCounter(state);
-  return dispatch(actions.setCounter(counter + 1));
-};
+const actions = asSliceActions({
+  incrementCounter: () => (dispatch, getState) => {
+    const state = getState();
+    const counter = selectors.getCounter(state);
+    return dispatch(rawActions.setCounter(counter + 1));
+  }
+});
 
 export const testSlice = {
+  name: SLICE_NAME,
   actions: {
+    ...rawActions,
     ...actions,
-    incrementCounter,
   },
-  selectors: {
-    getCounter,
-  },
+  selectors,
 };
 
-export default rawTestSlice.reducer;
+export default rawSlice.reducer;

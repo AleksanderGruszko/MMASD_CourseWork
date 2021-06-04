@@ -95,14 +95,17 @@ export function CustomTableRow ({
   return (
     <StyledTableRow>
       <ActionsCell />
-      {structure.map(({relatedFieldName}, index) => {
-        const cellContent = item[relatedFieldName];
+      {structure.map((structureItem: DataTableStructureItem, index) => {
+        const {title} = structureItem;
         return (
           <TableCell
-            key={`${item[uniqueFieldName]}_${cellContent}`}
+            key={`${item[uniqueFieldName]}_${title}`}
             scope={!!index ? 'row' : undefined}
           >
-            {item[relatedFieldName]}
+            {'renderCell' in structureItem
+              ? structureItem.renderCell(item)
+              : item[structureItem.relatedFieldName]
+            }
           </TableCell>
         );
       })}

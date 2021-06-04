@@ -17,6 +17,7 @@ import {noop} from '../../utils/noop';
 type DataTableProps = {
   items: DataTableItem[];
   uniqueFieldName: string;
+  noDataString?: string;
   structure: DataTableStructureItem[];
   isEditableItem?: (row: DataTableItem) => boolean;
   isRemovableItem?: (row: DataTableItem) => boolean;
@@ -50,10 +51,44 @@ export function DataTable ({
   onAddItemClick = noop,
   isEditableItem,
   isRemovableItem,
+  noDataString = 'No content at this table',
 }: DataTableProps) {
   const classes = useStyles();
   const isEditable = typeof isEditableItem !== 'undefined'
     || typeof isRemovableItem !== 'undefined';
+  const columnsCount = isEditable ? structure.length + 1 : structure.length;
+
+  const renderTableBody = () => {
+    if (items.length === 0) {
+      return (
+        <TableRow>
+          <TableCell colSpan={columnsCount} align={'center'}>
+            {noDataString}
+          </TableCell>
+        </TableRow>
+      );
+    }
+
+    return (
+      <>
+        {items.map((item) => {
+          return (
+            <CustomTableRow
+              key={item[uniqueFieldName]}
+              item={item}
+              uniqueFieldName={uniqueFieldName}
+              structure={structure}
+              onRemoveItemClick={onRemoveItemClick}
+              onEditItemClick={onEditItemClick}
+              isEditableItem={isEditableItem}
+              isRemovableItem={isRemovableItem}
+            />
+          );
+        })}
+      </>
+    );
+  }
+
   return (
     <div className={cs(classes.root)}>
       <TableContainer component={Paper}>
@@ -71,20 +106,7 @@ export function DataTable ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map((item) => {
-              return (
-                <CustomTableRow
-                  key={item[uniqueFieldName]}
-                  item={item}
-                  uniqueFieldName={uniqueFieldName}
-                  structure={structure}
-                  onRemoveItemClick={onRemoveItemClick}
-                  onEditItemClick={onEditItemClick}
-                  isEditableItem={isEditableItem}
-                  isRemovableItem={isRemovableItem}
-                />
-              );
-            })}
+            {renderTableBody()}
           </TableBody>
         </Table>
       </TableContainer>
