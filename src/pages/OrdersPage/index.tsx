@@ -1,10 +1,11 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Order} from '../../types/order.types';
 import {DataTable} from '../../components/DataTable';
 import {DataTableStructureItem} from '../../components/DataTable/dataTable.types';
 import {getCargoTypeMeasureUnitsTranslation} from '../../utils/specificTranslations.utils';
 import {ordersSlice} from '../../store/orders/orders.slice';
+import OrdersForm from './OrdersForm';
 
 const ORDERS_TABLE_STRUCTURE: DataTableStructureItem[] = [
   {
@@ -42,13 +43,16 @@ export function OrdersPage () {
   }, [dispatch]);
 
   return (
-    <DataTable
-      items={orders}
-      uniqueFieldName={'uuid'}
-      structure={ORDERS_TABLE_STRUCTURE}
-      noDataString={'No orders presented. Please, add new one'}
-      onRemoveItemClick={handleRemoveItemClick}
-      isRemovableItem={IS_REMOVABLE_CHECK_MOCK}
-    />
+    <>
+      <OrdersForm />
+      <DataTable
+        items={orders}
+        uniqueFieldName={'uuid'}
+        structure={ORDERS_TABLE_STRUCTURE}
+        noDataString={'No orders presented. Please, add new one'}
+        onRemoveItemClick={handleRemoveItemClick}
+        isRemovableItem={IS_REMOVABLE_CHECK_MOCK}
+      />
+    </>
   )
 }
