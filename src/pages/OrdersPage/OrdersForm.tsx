@@ -1,19 +1,25 @@
 import React, {useState} from 'react';
-import {Grid, Box} from '@material-ui/core';
+import {Grid, Box } from '@material-ui/core';
 import {CustomSelect} from '../../components/CustomSelect';
 import {CARGO_TYPES} from '../../types/cargo.types';
+import {CustomInputNumber} from '../../components/CustomInputNumber';
 
 export default function OrdersForm () {
   const [cargoSize, setCargoSize] = useState(1);
   const [cargoType, setCargoType] = useState(CARGO_TYPES.BOXES);
-  const [sourceCity, setSourceCity] = useState(1);
-  const [originCity, setOriginCity] = useState(2);
+  const [sourceCity, setSourceCity] = useState('');
+  const [originCity, setOriginCity] = useState('');
 
   return (
-    <Grid container>
-      <Grid container lg={6} spacing={3}>
+    <Grid container spacing={3}>
+      <Grid container item lg={6} spacing={3}>
         <Grid item xs={12} sm={6}>
-          Set cargo size
+          <CustomInputNumber
+            name={'cargoSize'}
+            label={'Set cargo amount'}
+            value={cargoSize}
+            onChange={setCargoSize}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Box mb={2}>
@@ -31,14 +37,14 @@ export default function OrdersForm () {
         </Grid>
       </Grid>
 
-      <Grid container lg={6} spacing={3}>
+      <Grid container item lg={6} spacing={3}>
         <Grid item xs={12} sm={6}>
           <Box mb={2}>
             <CustomSelect
               name={'city'}
               items={[
-                { label: 'Киев', value: 1 },
-                { label: 'Днепр', value: 2 },
+                { label: 'Киев', value: '1' },
+                { label: 'Днепр', value: '2' },
               ]}
               value={originCity}
               label={'Select origin city'}
@@ -51,8 +57,8 @@ export default function OrdersForm () {
             <CustomSelect
               name={'city'}
               items={[
-                { label: 'Киев', value: 1 },
-                { label: 'Днепр', value: 2 },
+                { label: 'Киев', value: '1' },
+                { label: 'Днепр', value: '2' },
               ]}
               value={sourceCity}
               label={'Select destination city'}

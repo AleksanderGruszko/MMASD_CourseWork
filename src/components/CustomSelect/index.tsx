@@ -24,7 +24,6 @@ export function CustomSelect<T extends string | number> ({
   return (
     <div className={styles.wrapper}>
       <FormControl
-        variant="filled"
         className={styles.root}
       >
         <InputLabel id={`${name}_label`}>{label}</InputLabel>
