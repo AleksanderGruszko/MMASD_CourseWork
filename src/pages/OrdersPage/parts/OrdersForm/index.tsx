@@ -1,30 +1,53 @@
-import React, {useState} from 'react';
-import {Grid, Box } from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
+import {Box, Grid} from '@material-ui/core';
 import {CustomSelect} from '../../../../components/atoms/CustomSelect';
 import {CARGO_TYPES} from '../../../../types/cargo.types';
 import {CustomInputNumber} from '../../../../components/atoms/CustomInputNumber';
 import {FormHolder} from '../../../../components/organisms/FormHolder';
+import {Order, RawOrder} from '../../../../types/order.types';
 
-export default function OrdersForm () {
-  const [cargoSize, setCargoSize] = useState(1);
-  const [cargoType, setCargoType] = useState(CARGO_TYPES.BOXES);
-  const [originCity, setOriginCity] = useState('');
-  const [targetCity, setTargetCity] = useState('');
+type OrdersFormProps = {
+  order: Partial<Order | RawOrder>;
+  onSubmit: (order: Order | RawOrder) => void;
+};
+
+export default function OrdersForm ({
+  order,
+  onSubmit,
+}: OrdersFormProps) {
+  const [cargoSize, setCargoSize] = useState(order.cargoSize || 1);
+  const [cargoType, setCargoType] = useState(order.cargoType || CARGO_TYPES.BOXES);
+  const [sourceCity, setSourceCity] = useState(order.sourceCity || '');
+  const [destinationCity, setDestinationCity] = useState(order.destinationCity || '');
   const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    setCargoSize(order.cargoSize || 1);
+    setCargoType(order.cargoType || CARGO_TYPES.BOXES);
+    setSourceCity(order.sourceCity || '');
+    setDestinationCity(order.destinationCity || '');
+  }, [order]);
 
   const handleFormSubmit = () => {
     if (!Number.isInteger(cargoSize) || cargoSize < 1 ) {
       return setErrorMsg('Cargo size should be positive integer');
     }
-    if (!targetCity || !originCity) {
+    if (!destinationCity || !sourceCity) {
       return setErrorMsg('Please, define origin and destination cities for an order');
     }
-    if (targetCity === originCity) {
+    if (destinationCity === sourceCity) {
       return setErrorMsg('Order can be formed only for different cities');
     }
     if (!cargoType) {
       return setErrorMsg('Please, define cargo type');
     }
+    onSubmit({
+      ...order,
+      cargoSize,
+      cargoType,
+      sourceCity,
+      destinationCity,
+    });
   };
 
   return (
@@ -69,9 +92,9 @@ export default function OrdersForm () {
                   { label: 'Киев', value: '1' },
                   { label: 'Днепр', value: '2' },
                 ]}
-                value={originCity}
+                value={sourceCity}
                 label={'Select origin city'}
-                onChange={setOriginCity}
+                onChange={setSourceCity}
               />
             </Box>
           </Grid>
@@ -83,9 +106,9 @@ export default function OrdersForm () {
                   { label: 'Киев', value: '1' },
                   { label: 'Днепр', value: '2' },
                 ]}
-                value={targetCity}
+                value={destinationCity}
                 label={'Select destination city'}
-                onChange={setTargetCity}
+                onChange={setDestinationCity}
               />
             </Box>
           </Grid>

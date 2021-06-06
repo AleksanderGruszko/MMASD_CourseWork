@@ -7,3 +7,5 @@ export type Order = {
   sourceCity: string;
   destinationCity: string;
 };
+
+export type RawOrder = Omit<Order, 'uuid'>;

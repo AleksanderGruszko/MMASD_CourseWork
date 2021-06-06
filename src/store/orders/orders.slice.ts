@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as makeUuid } from 'uuid';
 import {ApplicationState, asSliceActions, asSliceSelectors} from '../store.types';
 import {OrdersSliceState} from './orders.types';
-import {Order} from '../../types/order.types';
+import {Order, RawOrder} from '../../types/order.types';
 import {CARGO_TYPES} from '../../types/cargo.types';
 
 const ORDERS_MOCK: Order[] = [
@@ -75,19 +76,23 @@ const actions = asSliceActions({
       dispatch(rawActions.setOrders(ORDERS_MOCK));
     });
   },
-  addOrder: (order: Order) => (dispatch) => {
-    Promise.resolve().then(() => {
-      dispatch(rawActions.addOrderToList(order));
+  addOrder: (order: RawOrder) => (dispatch) => {
+    return Promise.resolve().then(() => {
+      // @note: MOCK OF UUID IS HERE!!!
+      const orderToSend = {
+        ...order,
+        uuid: makeUuid(),
+      };
+      dispatch(rawActions.addOrderToList(orderToSend));
     });
   },
   deleteOrder: (order: Order) => (dispatch) => {
-    console.log('%c DELETE ORDER', 'color: red');
-    Promise.resolve().then(() => {
+    return Promise.resolve().then(() => {
       dispatch(rawActions.removeOrderFromList(order));
     });
   },
   editOrder: (order: Order) => (dispatch) => {
-    Promise.resolve().then(() => {
+    return Promise.resolve().then(() => {
       dispatch(rawActions.editOrderInList(order));
     });
   },
