@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {Box, Grid} from '@material-ui/core';
 import {CustomSelect} from '../../../../components/atoms/CustomSelect';
 import {CARGO_TYPES} from '../../../../types/cargo.types';
 import {CustomInputNumber} from '../../../../components/atoms/CustomInputNumber';
 import {FormHolder} from '../../../../components/organisms/FormHolder';
 import {Order, RawOrder} from '../../../../types/order.types';
+import {citiesSlice} from '../../../../store/cities/cities.slice';
 
 type OrdersFormProps = {
   order: Partial<Order | RawOrder>;
@@ -15,11 +17,20 @@ export default function OrdersForm ({
   order,
   onSubmit,
 }: OrdersFormProps) {
+  const cities = useSelector(citiesSlice.selectors.getCities);
+
   const [cargoSize, setCargoSize] = useState(order.cargoSize || 1);
   const [cargoType, setCargoType] = useState(order.cargoType || CARGO_TYPES.BOXES);
   const [sourceCity, setSourceCity] = useState(order.sourceCity || '');
   const [destinationCity, setDestinationCity] = useState(order.destinationCity || '');
   const [errorMsg, setErrorMsg] = useState('');
+
+  const citiesOptions = useMemo(() => {
+    return cities.map(({uuid, title}) => ({
+      label: title,
+      value: uuid,
+    }))
+  }, [cities]);
 
   useEffect(() => {
     setCargoSize(order.cargoSize || 1);
@@ -88,10 +99,7 @@ export default function OrdersForm ({
             <Box mb={{sm: 2, md: 0}}>
               <CustomSelect
                 name={'city'}
-                items={[
-                  { label: 'Киев', value: '1' },
-                  { label: 'Днепр', value: '2' },
-                ]}
+                items={citiesOptions}
                 value={sourceCity}
                 label={'Select origin city'}
                 onChange={setSourceCity}
@@ -102,10 +110,7 @@ export default function OrdersForm ({
             <Box mb={{sm: 2, md: 0}}>
               <CustomSelect
                 name={'city'}
-                items={[
-                  { label: 'Киев', value: '1' },
-                  { label: 'Днепр', value: '2' },
-                ]}
+                items={citiesOptions}
                 value={destinationCity}
                 label={'Select destination city'}
                 onChange={setDestinationCity}

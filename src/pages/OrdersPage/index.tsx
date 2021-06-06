@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Order, RawOrder} from '../../types/order.types';
 import {DataTable} from '../../components/molecules/DataTable';
@@ -6,25 +6,33 @@ import {DataTableStructureItem} from '../../components/molecules/DataTable/dataT
 import {getCargoTypeMeasureUnitsTranslation} from '../../utils/specificTranslations.utils';
 import {ordersSlice} from '../../store/orders/orders.slice';
 import OrdersForm from './parts/OrdersForm';
+import {citiesSlice} from '../../store/cities/cities.slice';
+import {City} from '../../types/city.types';
 
-const ORDERS_TABLE_STRUCTURE: DataTableStructureItem[] = [
-  {
-    title: 'Cargo to delivery',
-    renderCell: (item) => {
-      const order = item as Order;
-      const cargoUnits = getCargoTypeMeasureUnitsTranslation(order.cargoType);
-      return `${order.cargoSize} ${cargoUnits}`
+function getTableStructure (citiesHash: Record<string, City>): DataTableStructureItem[] {
+  return [
+    {
+      title: 'Cargo to delivery',
+      renderCell: (item) => {
+        const order = item as Order;
+        const cargoUnits = getCargoTypeMeasureUnitsTranslation(order.cargoType);
+        return `${order.cargoSize} ${cargoUnits}`
+      },
     },
-  },
-  {
-    title: 'Origin',
-    relatedFieldName: 'sourceCity',
-  },
-  {
-    title: 'Destination',
-    relatedFieldName: 'destinationCity',
-  },
-];
+    {
+      title: 'Origin',
+      renderCell: (item) => (
+        citiesHash[item.sourceCity] && citiesHash[item.sourceCity].title
+      ),
+    },
+    {
+      title: 'Destination',
+      renderCell: (item) => (
+        citiesHash[item.destinationCity] && citiesHash[item.destinationCity].title
+      ),
+    },
+  ];
+}
 
 enum FORM_MODES {
   REST = 'rest',
@@ -38,8 +46,13 @@ const IS_EDITABLE_CHECK_MOCK = () => true;
 export function OrdersPage () {
   const dispatch = useDispatch();
   const orders = useSelector(ordersSlice.selectors.getOrders);
+  const citiesHash = useSelector(citiesSlice.selectors.getCitiesHash);
   const [orderToEdit, setOrderToEdit] = useState<Order | Partial<RawOrder> | null>(null);
   const [mode, setMode] = useState(FORM_MODES.REST);
+
+  const tableStructure = useMemo(() => {
+    return getTableStructure(citiesHash);
+  }, [citiesHash]);
 
   const handleEditItemClick = (uuid: string) => {
     const orderToEdit = orders.find((order) => (order.uuid === uuid));
@@ -87,7 +100,7 @@ export function OrdersPage () {
       <DataTable
         items={orders}
         uniqueFieldName={'uuid'}
-        structure={ORDERS_TABLE_STRUCTURE}
+        structure={tableStructure}
         noDataString={'No orders presented. Please, add new one'}
         onRemoveItemClick={handleRemoveItemClick}
         isRemovableItem={IS_REMOVABLE_CHECK_MOCK}
