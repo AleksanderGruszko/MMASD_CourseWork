@@ -8,16 +8,19 @@ import {defaultTheme} from './themes/default.theme';
 import store from './store';
 import { ConnectedNotifications } from './components/atoms/ConnectedNotifications';
 import PageRoutes from './pages';
+import {AppConfigurator} from './components/AppConfigurator';
 
 function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={defaultTheme}>
-        <AppLayout
-          renderMenu={MainMenu}
-        >
-          <PageRoutes />
-        </AppLayout>
+        <AppConfigurator>
+          <AppLayout
+            renderMenu={MainMenu}
+          >
+            <PageRoutes />
+          </AppLayout>
+        </AppConfigurator>
       </ThemeProvider>
       <SnackbarProvider>
         <ConnectedNotifications />

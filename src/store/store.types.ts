@@ -3,8 +3,10 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { TestSliceState } from './test/test.types';
 import { NotificationsSliceType } from './notifications/notifications.types';
 import {OrdersSliceState} from './orders/orders.types';
+import {CitiesSliceState} from './cities/cities.types';
 
 export type ApplicationState = {
+  cities: CitiesSliceState;
   test: TestSliceState;
   notifications: NotificationsSliceType;
   orders: OrdersSliceState;
