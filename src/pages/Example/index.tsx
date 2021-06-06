@@ -1,4 +1,4 @@
-import {DataTable} from '../../components/DataTable';
+import {DataTable} from '../../components/molecules/DataTable';
 import React from 'react';
 
 const ITEMS = [

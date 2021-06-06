@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Order} from '../../types/order.types';
-import {DataTable} from '../../components/DataTable';
-import {DataTableStructureItem} from '../../components/DataTable/dataTable.types';
+import {DataTable} from '../../components/molecules/DataTable';
+import {DataTableStructureItem} from '../../components/molecules/DataTable/dataTable.types';
 import {getCargoTypeMeasureUnitsTranslation} from '../../utils/specificTranslations.utils';
 import {ordersSlice} from '../../store/orders/orders.slice';
-import OrdersForm from './OrdersForm';
+import OrdersForm from './parts/OrdersForm';
 
 const ORDERS_TABLE_STRUCTURE: DataTableStructureItem[] = [
   {

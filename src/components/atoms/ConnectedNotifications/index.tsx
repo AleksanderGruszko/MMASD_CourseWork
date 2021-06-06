@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { notificationsSlice } from '../../store/notifications/notifications.slice';
+import { notificationsSlice } from '../../../store/notifications/notifications.slice';
 
 export function ConnectedNotifications () {
   const message = useSelector(notificationsSlice.selectors.message);

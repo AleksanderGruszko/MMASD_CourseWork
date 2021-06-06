@@ -12,7 +12,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import {DataTableItem, DataTableStructureItem} from './dataTable.types';
 import {CustomTableRow} from './CustomTableRow';
-import {noop} from '../../utils/noop';
+import {noop} from '../../../utils/noop';
 
 type DataTableProps = {
   items: DataTableItem[];

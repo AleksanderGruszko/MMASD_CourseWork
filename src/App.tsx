@@ -6,7 +6,7 @@ import AppLayout from './layouts/AppLayout';
 import { MainMenu } from './components/MainMenu';
 import {defaultTheme} from './themes/default.theme';
 import store from './store';
-import { ConnectedNotifications } from './components/ConnectedNotifications';
+import { ConnectedNotifications } from './components/atoms/ConnectedNotifications';
 import PageRoutes from './pages';
 
 function App() {
