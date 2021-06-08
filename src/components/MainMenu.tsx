@@ -23,6 +23,9 @@ function RawMenuItem (props: MenuItemProps) {
   const {text, href, Icon} = props;
 
   const handleItemClick = () => {
+    if (history.location.pathname === href) {
+      return;
+    }
     history.push(href);
   };
 
@@ -72,7 +75,7 @@ export function MainMenu () {
       }>
         <MenuItem
           text="invoice"
-          href="/make-transport"
+          href={ENDPOINTS.INVOICES}
           Icon={InvoiceIcon}
         />
       </List>
@@ -84,7 +87,7 @@ export function MainMenu () {
       }>
         <MenuItem
           text="Cities list"
-          href="/make-transport"
+          href={ENDPOINTS.CITIES}
           Icon={CityIcon}
         />
       </List>

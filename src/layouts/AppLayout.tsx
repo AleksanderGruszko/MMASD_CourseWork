@@ -154,7 +154,10 @@ export default function AppLayout (props: AppLayoutProps): React.ReactElement {
         <div className={clsx(classes.contentWrapper)}>
           <div className={classes.drawerHeader} />
           {props.children}
-          {open && <div className={classes.contentFade} />}
+          {open && <div
+            className={classes.contentFade}
+            onClick={() => setOpen(false)}
+          />}
         </div>
       </main>
     </div>
