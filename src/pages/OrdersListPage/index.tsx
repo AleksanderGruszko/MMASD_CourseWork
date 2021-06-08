@@ -43,7 +43,7 @@ enum FORM_MODES {
 const IS_REMOVABLE_CHECK_MOCK = () => true;
 const IS_EDITABLE_CHECK_MOCK = () => true;
 
-export function OrdersPage () {
+export function OrdersListPage () {
   const dispatch = useDispatch();
   const orders = useSelector(ordersSlice.selectors.getOrders);
   const citiesHash = useSelector(citiesSlice.selectors.getCitiesHash);

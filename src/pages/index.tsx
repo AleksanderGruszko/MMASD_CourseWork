@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ENDPOINTS } from './endpoints.types';
 import ExamplePage from './Example';
-import {OrdersPage} from './OrdersPage';
+import {OrdersListPage} from './OrdersListPage';
 
 export default function PageRoutes () {
   return (
@@ -16,7 +16,7 @@ export default function PageRoutes () {
         <Route
           exact={true}
           path={ENDPOINTS.ORDERS}
-          component={OrdersPage}
+          component={OrdersListPage}
         />
       </Switch>
     </BrowserRouter>
