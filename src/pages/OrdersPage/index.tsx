@@ -74,6 +74,11 @@ export function OrdersPage () {
     }
   };
 
+  const handleFormClose = () => {
+    setOrderToEdit(null);
+    setMode(FORM_MODES.REST);
+  };
+
   const handleFormSubmit = async (order: Order | RawOrder) => {
     if (mode === FORM_MODES.EDIT) {
       await dispatch(ordersSlice.actions.editOrder(order as Order));
@@ -94,6 +99,7 @@ export function OrdersPage () {
       {mode !== FORM_MODES.REST && orderToEdit !== null && (
         <OrdersForm
           order={orderToEdit}
+          onCancel={handleFormClose}
           onSubmit={handleFormSubmit}
         />
       )}

@@ -11,11 +11,13 @@ import {citiesSlice} from '../../../../store/cities/cities.slice';
 type OrdersFormProps = {
   order: Partial<Order | RawOrder>;
   onSubmit: (order: Order | RawOrder) => void;
+  onCancel: () => void;
 };
 
 export default function OrdersForm ({
   order,
   onSubmit,
+  onCancel,
 }: OrdersFormProps) {
   const cities = useSelector(citiesSlice.selectors.getCities);
 
@@ -64,6 +66,7 @@ export default function OrdersForm ({
   return (
     <FormHolder
       onSubmit={handleFormSubmit}
+      onCancel={onCancel}
       errorMsg={errorMsg}
     >
       <Grid container spacing={3}>
