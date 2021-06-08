@@ -4,6 +4,7 @@ import { ENDPOINTS } from './endpoints.types';
 import ExamplePage from './Example';
 import {OrdersListPage} from './OrdersListPage';
 import {VehiclesListPage} from './VehiclesListPage';
+import {CitiesListPage} from './CitiesListPage';
 
 export default function PageRoutes () {
   return (
@@ -22,6 +23,11 @@ export default function PageRoutes () {
         exact={true}
         path={ENDPOINTS.VEHICLES}
         component={VehiclesListPage}
+      />
+      <Route
+        exact={true}
+        path={ENDPOINTS.CITIES}
+        component={CitiesListPage}
       />
     </Switch>
   );

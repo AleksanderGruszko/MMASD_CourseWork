@@ -21,6 +21,7 @@ type DataTableProps = {
   structure: DataTableStructureItem[];
   isEditableItem?: (row: DataTableItem) => boolean;
   isRemovableItem?: (row: DataTableItem) => boolean;
+  isAbleToAdd?: boolean;
   onAddItemClick?: () => void;
   onRemoveItemClick?: (uniqueValue: any) => void;
   onEditItemClick?: (uniqueValue: any) => void;
@@ -51,6 +52,7 @@ export function DataTable ({
   onAddItemClick = noop,
   isEditableItem,
   isRemovableItem,
+  isAbleToAdd = true,
   noDataString = 'No content at this table',
 }: DataTableProps) {
   const classes = useStyles();
@@ -111,13 +113,15 @@ export function DataTable ({
         </Table>
       </TableContainer>
       <div className={cs(classes.bottomRightActionsRoot)}>
-        <Fab
-          size="medium"
-          color="primary"
-          onClick={onAddItemClick}
-        >
-          <AddIcon />
-        </Fab>
+        {isAbleToAdd && (
+          <Fab
+            size="medium"
+            color="primary"
+            onClick={onAddItemClick}
+          >
+            <AddIcon />
+          </Fab>
+        )}
       </div>
     </div>
   );
