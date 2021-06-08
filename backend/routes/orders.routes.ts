@@ -16,7 +16,7 @@ export default function applyOrderRoutes (router: express.Router) {
   router.put('/orders/:orderId', async (req, res) => {
     const {uuid, ...orderToUpdate} = req.body
     const { orderId } = req.params;
-    const updated = await ordersModel.findByIdAndUpdate(orderId, orderToUpdate);
+    const updated = await ordersModel.findByIdAndUpdate(orderId, orderToUpdate, {new: true});
     res.send(updated !== null ? makeResponse(updated) : null);
   });
 

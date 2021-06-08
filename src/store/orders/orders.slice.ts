@@ -4,31 +4,6 @@ import axios from 'axios';
 import {ApplicationState, asSliceActions, asSliceSelectors} from '../store.types';
 import {OrdersSliceState} from './orders.types';
 import {Order, RawOrder} from '../../types/order.types';
-import {CARGO_TYPES} from '../../types/cargo.types';
-
-const ORDERS_MOCK: Order[] = [
-  {
-    uuid: '1',
-    cargoType: CARGO_TYPES.BOXES,
-    cargoSize: 50,
-    sourceCity: '1',
-    destinationCity: '2',
-  },
-  {
-    uuid: '2',
-    cargoType: CARGO_TYPES.BOXES,
-    cargoSize: 50,
-    sourceCity: '1',
-    destinationCity: '2',
-  },
-  {
-    uuid: '3',
-    cargoType: CARGO_TYPES.FLUIDS,
-    cargoSize: 50,
-    sourceCity: '1',
-    destinationCity: '2',
-  },
-]
 
 const initialState: OrdersSliceState = {
   orders: [],
@@ -75,8 +50,6 @@ const actions = asSliceActions({
   loadOrders: () => (dispatch) => {
     return axios.get('http://localhost:5000/orders')
       .then((res) => {
-        console.log('%c RES', 'color: cyan');
-        console.log(res.data);
         dispatch(rawActions.setOrders(res.data));
       });
   },

@@ -1,17 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {createSelector} from 'reselect';
-import { v4 as makeUuid } from 'uuid';
+import axios from 'axios';
 import { asSliceActions, asSliceSelectors} from '../store.types';
 import {CitiesSliceState} from './cities.types';
 import {City} from '../../types/city.types';
-
-const CITIES_MOCK = [
-  { uuid: makeUuid(), title: 'Kyiv' },
-  { uuid: makeUuid(), title: 'Dnipro' },
-  { uuid: makeUuid(), title: 'Kharkiv' },
-  { uuid: makeUuid(), title: 'Lviv' },
-  { uuid: makeUuid(), title: 'Odessa' },
-];
 
 const initialState: CitiesSliceState = {
   cities: [],
@@ -51,9 +43,10 @@ const getCitiesHash = createSelector([
 
 const actions = asSliceActions({
   loadCities: () => (dispatch) => {
-    Promise.resolve().then(() => {
-      dispatch(rawActions.setCities(CITIES_MOCK));
-    });
+    return axios.get('http://localhost:5000/cities')
+      .then((res) => {
+        dispatch(rawActions.setCities(res.data));
+      });
   },
 })
 
