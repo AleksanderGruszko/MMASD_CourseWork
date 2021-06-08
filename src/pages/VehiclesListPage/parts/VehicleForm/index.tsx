@@ -81,6 +81,7 @@ export default function VehicleForm ({
                 name={'vehicleTitle'}
                 label={'Set vehicle name'}
                 value={title}
+                style={{width: '100%'}}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </Box>

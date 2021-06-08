@@ -9,17 +9,6 @@ type OptionsMeta = {
   }
 }
 
-function addEmpty <OptionType>(options: OptionType[], opts?: OptionsMeta) {
-  if (!opts || !opts.empty) {
-    return options;
-  }
-  return [opts.empty, ...options];
-}
-
-type Option = {label: string;};
-
-type CargoTypeOption = Option & {value: CARGO_TYPES};
-
 export const optionFactories = {
   makeCityOptions (cities: City[]) {
     return cities.map(({uuid, title}) => ({

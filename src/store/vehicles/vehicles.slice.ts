@@ -63,15 +63,17 @@ const actions = asSliceActions({
   },
 
   updateVehicle: (vehicle: Vehicle) => (dispatch) => {
-    Promise.resolve().then(() => {
-      dispatch(rawActions.editVehicleAtList(vehicle));
-    });
+    axios.put(`http://localhost:5000/vehicles/${vehicle.uuid}`, vehicle)
+      .then((res) => {
+        dispatch(rawActions.editVehicleAtList(res.data));
+      });
   },
 
   deleteVehicle: (vehicle: Vehicle) => (dispatch) => {
-    Promise.resolve().then(() => {
-      dispatch(rawActions.deleteVehicleFromList(vehicle));
-    });
+    axios.delete(`http://localhost:5000/vehicles/${vehicle.uuid}`)
+      .then(() => {
+        dispatch(rawActions.deleteVehicleFromList(vehicle));
+      });
   },
 });
 

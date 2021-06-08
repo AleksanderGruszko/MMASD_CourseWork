@@ -33,7 +33,7 @@ function getTableStructure (citiesHash: Record<string, City>): DataTableStructur
       title: 'Assigned to...',
       renderCell: (item) => {
         const vehicle = item as Vehicle;
-        return citiesHash[vehicle.currentCity];
+        return citiesHash[vehicle.currentCity].title;
       },
     },
   ];

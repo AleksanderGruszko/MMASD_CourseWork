@@ -14,7 +14,7 @@ export function AppConfigurator ({
 
   useEffect(() => {
     dispatch(citiesSlice.actions.loadCities());
-  }, []);
+  });
 
   if (!areCitiesLoaded) {
     return null;

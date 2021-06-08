@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 as makeUuid } from 'uuid';
 import axios from 'axios';
 import {ApplicationState, asSliceActions, asSliceSelectors} from '../store.types';
 import {OrdersSliceState} from './orders.types';
