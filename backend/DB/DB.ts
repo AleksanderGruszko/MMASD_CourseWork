@@ -1,18 +1,13 @@
-import {MongoClient} from 'mongodb';
+import mongoose from 'mongoose';
 import {DB_NAME, DB_PWD, DB_USER} from '../config';
 
 const user = encodeURIComponent(DB_USER);
 const password = encodeURIComponent(DB_PWD);
-const uri = `mongodb://${user}:${password}@127.0.0.1:27017/?authSource=admin`;
-
-const client = new MongoClient(uri);
+const url = `mongodb://${user}:${password}@127.0.0.1:27017/${DB_NAME}?authSource=admin`;
 
 export class DB {
   static async Connect () {
-    return await client.connect();
-  }
-
-  static GetDB () {
-    return client.db(DB_NAME);
+    await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+    console.log('\x1b[36m%s\x1b[0m', 'DB connection has established');
   }
 }

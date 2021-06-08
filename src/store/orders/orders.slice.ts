@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as makeUuid } from 'uuid';
+import axios from 'axios';
 import {ApplicationState, asSliceActions, asSliceSelectors} from '../store.types';
 import {OrdersSliceState} from './orders.types';
 import {Order, RawOrder} from '../../types/order.types';
@@ -72,29 +73,29 @@ const selectors = asSliceSelectors({
 
 const actions = asSliceActions({
   loadOrders: () => (dispatch) => {
-    Promise.resolve().then(() => {
-      dispatch(rawActions.setOrders(ORDERS_MOCK));
-    });
+    return axios.get('http://localhost:5000/orders')
+      .then((res) => {
+        console.log('%c RES', 'color: cyan');
+        console.log(res.data);
+        dispatch(rawActions.setOrders(res.data));
+      });
   },
   addOrder: (order: RawOrder) => (dispatch) => {
-    return Promise.resolve().then(() => {
-      // @note: MOCK OF UUID IS HERE!!!
-      const orderToSend = {
-        ...order,
-        uuid: makeUuid(),
-      };
-      dispatch(rawActions.addOrderToList(orderToSend));
+    return axios.post('http://localhost:5000/orders', order).then((res) => {
+      dispatch(rawActions.addOrderToList(res.data));
     });
   },
   deleteOrder: (order: Order) => (dispatch) => {
-    return Promise.resolve().then(() => {
-      dispatch(rawActions.removeOrderFromList(order));
-    });
+    return axios.delete(`http://localhost:5000/orders/${order.uuid}`)
+      .then(() => {
+        dispatch(rawActions.removeOrderFromList(order));
+      });
   },
   editOrder: (order: Order) => (dispatch) => {
-    return Promise.resolve().then(() => {
-      dispatch(rawActions.editOrderInList(order));
-    });
+    return axios.put(`http://localhost:5000/orders/${order.uuid}`, order)
+      .then((res) => {
+        dispatch(rawActions.editOrderInList(res.data));
+      });
   },
 })
 

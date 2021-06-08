@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import {DB} from './DB/DB';
 import {SERVER_PORT} from './config';
+import {combineRoutes} from './routes';
 
 const app = express();
 
@@ -14,13 +15,10 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use('/', (req, res) => {
-  res.send('ebala');
-});
+combineRoutes(app);
 
 async function runServer () {
   await DB.Connect();
-  console.log('\x1b[36m%s\x1b[0m', 'DB was connected');
   await app.listen(SERVER_PORT);
   console.log('\x1b[36m%s\x1b[0m', `Server is running in http://localhost:${SERVER_PORT}`);
 }
