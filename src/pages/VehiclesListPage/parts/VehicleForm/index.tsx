@@ -23,6 +23,7 @@ export default function VehicleForm ({
   const cities = useSelector(citiesSlice.selectors.getCities);
 
   const [title, setTitle] = useState(vehicle.title || '');
+  const [pricePerKm, setPricePerKm] = useState(vehicle.pricePerKm || 1);
   const [cargoSize, setCargoSize] = useState(vehicle.cargoSize || 1);
   const [cargoType, setCargoType] = useState(vehicle.cargoType || CARGO_TYPES.BOXES);
   const [currentCity, setCurrentCity] = useState(vehicle.currentCity || '');
@@ -38,6 +39,7 @@ export default function VehicleForm ({
 
   useEffect(() => {
     setTitle(vehicle.title || '');
+    setPricePerKm(vehicle.pricePerKm || 1);
     setCargoSize(vehicle.cargoSize || 1);
     setCargoType(vehicle.cargoType || CARGO_TYPES.BOXES);
     setCurrentCity(vehicle.currentCity || '');
@@ -57,10 +59,14 @@ export default function VehicleForm ({
     if (!Number.isInteger(cargoSize) || cargoSize <= 0 ) {
       return setErrorMsg('Cargo size should be positive integer');
     }
+    if (!Number.isInteger(pricePerKm) || pricePerKm <= 0 ) {
+      return setErrorMsg('Price should be positive integer');
+    }
     setErrorMsg('');
     onSubmit({
       ...vehicle,
       title,
+      pricePerKm,
       cargoSize,
       cargoType,
       currentCity,
@@ -74,8 +80,8 @@ export default function VehicleForm ({
       errorMsg={errorMsg}
     >
       <Grid container spacing={3}>
-        <Grid container item lg={6} spacing={3}>
-          <Grid item xs={12} sm={6}>
+        <Grid container item spacing={3}>
+          <Grid item xs={12} lg={11}>
             <Box mb={{sm: 2, md: 0}}>
               <TextField
                 name={'vehicleTitle'}
@@ -83,6 +89,18 @@ export default function VehicleForm ({
                 value={title}
                 style={{width: '100%'}}
                 onChange={(e) => setTitle(e.target.value)}
+              />
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid container item lg={6} spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <Box mb={{sm: 2, md: 0}}>
+              <CustomInputNumber
+                name={'vehiclePrice'}
+                label={'Set price/km'}
+                value={pricePerKm}
+                onChange={setPricePerKm}
               />
             </Box>
           </Grid>

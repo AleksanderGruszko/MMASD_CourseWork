@@ -36,6 +36,10 @@ function getTableStructure (citiesHash: Record<string, City>): DataTableStructur
         return citiesHash[vehicle.currentCity].title;
       },
     },
+    {
+      title: 'Price/km',
+      relatedFieldName: 'pricePerKm',
+    },
   ];
 }
 

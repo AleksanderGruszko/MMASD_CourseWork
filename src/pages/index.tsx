@@ -5,6 +5,7 @@ import ExamplePage from './Example';
 import {OrdersListPage} from './OrdersListPage';
 import {VehiclesListPage} from './VehiclesListPage';
 import {CitiesListPage} from './CitiesListPage';
+import {InvoicesListPage} from './InvoicesListPage';
 
 export default function PageRoutes () {
   return (
@@ -28,6 +29,11 @@ export default function PageRoutes () {
         exact={true}
         path={ENDPOINTS.CITIES}
         component={CitiesListPage}
+      />
+      <Route
+        exact={true}
+        path={ENDPOINTS.INVOICES}
+        component={InvoicesListPage}
       />
     </Switch>
   );

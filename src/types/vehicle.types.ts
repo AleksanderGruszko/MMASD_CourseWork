@@ -6,6 +6,7 @@ export type Vehicle = {
   cargoType: CARGO_TYPES;
   cargoSize: number;
   currentCity: string;
+  pricePerKm: number;
 };
 
 export type RawVehicle = Omit<Vehicle, 'uuid'>;

@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "server:start1": "ts-node --project ./backend/tsconfig.json ./backend/index.ts",
     "server:start": "ts-node --project ./backend/tsconfig.json ./backend/index.ts",
     "server:watch": "nodemon",
     "build": "react-scripts build",

@@ -10,6 +10,10 @@ const vehiclesSchema:Schema<VehiclesInterface> = new Schema({
     type: 'String',
     required: true,
   },
+  pricePerKm: {
+    type: 'Number',
+    required: true,
+  },
   cargoType: {
     type: 'String',
     required: true,
