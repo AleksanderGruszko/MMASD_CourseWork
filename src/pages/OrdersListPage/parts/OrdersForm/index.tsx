@@ -7,6 +7,7 @@ import {CustomInputNumber} from '../../../../components/atoms/CustomInputNumber'
 import {FormHolder} from '../../../../components/organisms/FormHolder';
 import {Order, RawOrder} from '../../../../types/order.types';
 import {citiesSlice} from '../../../../store/cities/cities.slice';
+import {optionFactories} from '../../../../utils/optionFactories';
 
 type OrdersFormProps = {
   order: Partial<Order | RawOrder>;
@@ -28,10 +29,7 @@ export default function OrdersForm ({
   const [errorMsg, setErrorMsg] = useState('');
 
   const citiesOptions = useMemo(() => {
-    return cities.map(({uuid, title}) => ({
-      label: title,
-      value: uuid,
-    }))
+    return optionFactories.makeCityOptions(cities);
   }, [cities]);
 
   useEffect(() => {
@@ -39,6 +37,7 @@ export default function OrdersForm ({
     setCargoType(order.cargoType || CARGO_TYPES.BOXES);
     setSourceCity(order.sourceCity || '');
     setDestinationCity(order.destinationCity || '');
+    setErrorMsg('');
   }, [order]);
 
   const handleFormSubmit = () => {

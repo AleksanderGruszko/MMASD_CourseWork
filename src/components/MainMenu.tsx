@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter, useHistory, RouteComponentProps} from 'react-router-dom';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListSubheader from '@material-ui/core/ListSubheader';
@@ -6,23 +7,23 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import LocalShippingIcon from '@material-ui/icons/LocalShippingOutlined';
-import SpeedIcon from '@material-ui/icons/SpeedOutlined';
 import WebIcon from '@material-ui/icons/WebOutlined';
 import CityIcon from '@material-ui/icons/ApartmentOutlined';
 import InvoiceIcon from '@material-ui/icons/LayersOutlined';
+import {ENDPOINTS} from '../pages/endpoints.types';
 
 type MenuItemProps = {
   text: string;
   href: string;
   Icon?: React.FC;
-};
+} & RouteComponentProps;
 
-function MenuItem (props: MenuItemProps) {
+function RawMenuItem (props: MenuItemProps) {
+  const history = useHistory();
   const {text, href, Icon} = props;
 
   const handleItemClick = () => {
-    console.log('%c ITEM: CLICK', 'color: cyan');
-    console.log(href);
+    history.push(href);
   };
 
   return (
@@ -42,28 +43,25 @@ function MenuItem (props: MenuItemProps) {
   );
 }
 
+const MenuItem = withRouter(RawMenuItem);
+
 export function MainMenu () {
   return (
     <>
       <List subheader={
         <ListSubheader component="div">
-          Register new...
+          List of...
         </ListSubheader>
       }>
         <MenuItem
-          text="order"
-          href="/make-transport"
+          text="orders"
+          href={ENDPOINTS.ORDERS}
           Icon={WebIcon}
         />
         <MenuItem
-          text="transport"
-          href="/make-transport"
+          text="vehicles"
+          href={ENDPOINTS.VEHICLES}
           Icon={LocalShippingIcon}
-        />
-        <MenuItem
-          text="transport type"
-          href="/make-transport"
-          Icon={SpeedIcon}
         />
       </List>
       <Divider />

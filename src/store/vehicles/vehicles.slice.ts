@@ -60,7 +60,19 @@ const actions = asSliceActions({
       .then((res) => {
         dispatch(rawActions.addVehicleToList(res.data));
       });
-  }
+  },
+
+  updateVehicle: (vehicle: Vehicle) => (dispatch) => {
+    Promise.resolve().then(() => {
+      dispatch(rawActions.editVehicleAtList(vehicle));
+    });
+  },
+
+  deleteVehicle: (vehicle: Vehicle) => (dispatch) => {
+    Promise.resolve().then(() => {
+      dispatch(rawActions.deleteVehicleFromList(vehicle));
+    });
+  },
 });
 
 export const vehiclesSlice = {
