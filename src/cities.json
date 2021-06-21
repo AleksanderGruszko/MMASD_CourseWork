@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Kyiv",
+    "uuid": "60bf46c8daad9f6297bf6eb3",
+    "distances": {
+      "60bf46c8daad9f6297bf6eb3": 0,
+      "60bf46c8daad9f6297bf6eb4": 533,
+      "60bf46c8daad9f6297bf6eb7": 489,
+      "60bf46c8daad9f6297bf6eb5": 550,
+      "60bf46c8daad9f6297bf6eb6": 478
+    }
+  },
+  {
+    "title": "Dnipro",
+    "uuid": "60bf46c8daad9f6297bf6eb4",
+    "distances": {
+      "60bf46c8daad9f6297bf6eb3": 533,
+      "60bf46c8daad9f6297bf6eb4": 0,
+      "60bf46c8daad9f6297bf6eb7": 468,
+      "60bf46c8daad9f6297bf6eb5": 975,
+      "60bf46c8daad9f6297bf6eb6": 376,
+    }
+  },
+  {
+    "title": "Odessa",
+    "uuid": "60bf46c8daad9f6297bf6eb7",
+    "distances": {
+      "60bf46c8daad9f6297bf6eb3": 489,
+      "60bf46c8daad9f6297bf6eb4": 468,
+      "60bf46c8daad9f6297bf6eb7": 0,
+      "60bf46c8daad9f6297bf6eb5": 970,
+      "60bf46c8daad9f6297bf6eb6": 831
+    }
+  },
+  {
+    "title": "Lviv",
+    "uuid": "60bf46c8daad9f6297bf6eb5",
+    "distances": {
+      "60bf46c8daad9f6297bf6eb3": 550,
+      "60bf46c8daad9f6297bf6eb4": 975,
+      "60bf46c8daad9f6297bf6eb7": 970,
+      "60bf46c8daad9f6297bf6eb5": 0,
+      "60bf46c8daad9f6297bf6eb6": 1028
+    }
+  },
+  {
+    "title": "Kharkiv",
+    "uuid": "60bf46c8daad9f6297bf6eb6",
+    "distances": {
+      "60bf46c8daad9f6297bf6eb3": 478,
+      "60bf46c8daad9f6297bf6eb4": 376,
+      "60bf46c8daad9f6297bf6eb7": 831,
+      "60bf46c8daad9f6297bf6eb5": 1028,
+      "60bf46c8daad9f6297bf6eb6": 0
+    }
+  }
+]
